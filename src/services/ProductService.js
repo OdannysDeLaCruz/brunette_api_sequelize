@@ -1,7 +1,6 @@
 const Boom = require("@hapi/boom")
 const ProductRepository = require("../repositories/ProductRepository.js") 
-const { sendSuccessResponse } = require("../adapters/http/sendSuccessResponse.js")
-// const { isObjectIdValid } = require("../utils/index.js")
+
 const productRepository = new ProductRepository()
 
 /**
@@ -41,8 +40,6 @@ const getOneProduct = async (id) => {
         return product
     } catch ( error ) {
         throw error
-        // console.log(error)
-        // throw Boom.serverUnavailable('unavailable')
     }
 }
 
@@ -56,10 +53,7 @@ const getOneProduct = async (id) => {
 const createOneProduct = async (newProduct) => {
     try {
         if ( !newProduct ) {
-            throw {
-                status: 400,
-                message: "No valid object provided"
-            }
+            throw Boom.badRequest('No valid object provided')
         }
 
         // TODO: verify all fields required
@@ -67,42 +61,26 @@ const createOneProduct = async (newProduct) => {
         const productCreated = await productRepository.create(newProduct)
         return productCreated
     } catch ( error ) {
-        throw {
-            status: error.status || 500,
-            message: error.message || error
-        }
+        throw error
     }
 }
 
 const deleteOneProduct = async (id) => {
     try {
         if ( !id ) {
-            throw {
-                status: 400,
-                message: 'Param id is required'
-            }
+            throw Boom.badRequest('Param id is required')
         }
 
-        if ( !isObjectIdValid(id) ) {
-            throw {
-                status: 400,
-                message: `'${id}' is not valid object`
-            }
+        const product = await productRepository.findById(id)
+        if ( !product ) {
+            throw Boom.notFound('Product Not Found')
         }
 
-        const productDeleted = await productRepository.delete(id)
-        if (!productDeleted) {
-            throw {
-                status: 404,
-                message: "Product not found"
-            }  
-        }
+        // Product Model is paranoic 
+        const productDeleted = await productRepository.delete(product.id)
         return productDeleted
     } catch ( error ) {
-        throw {
-            status: error.status || 500,
-            message: error.message || error
-        }
+        throw error
     }
 } 
 

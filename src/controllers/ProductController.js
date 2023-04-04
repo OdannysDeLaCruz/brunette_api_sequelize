@@ -1,5 +1,5 @@
 const ProductService = require("../services/ProductService.js")
-const { sendSuccessResponse, sendSuccessResponsePaginated } = require("../adapters/http/sendSuccessResponse.js")
+const { sendSuccessResponse, sendSuccessPaginatedResponse, sendCreatedResponse } = require("../adapters/http/sendResponse.js")
 
 const getAllProducts = async ( req, res, next ) => {
     try {
@@ -9,7 +9,7 @@ const getAllProducts = async ( req, res, next ) => {
         const { count, rows } = await ProductService.getAllProducts({ page, limit })
         const pagesCount = Math.ceil(count / limit);
 
-        sendSuccessResponsePaginated({
+        sendSuccessPaginatedResponse({
             res,
             req,
             data: { products: rows },
@@ -34,49 +34,29 @@ const getOneProduct = async ( req, res, next ) => {
     }
 }
 
-const createOneProduct = async ( req, res ) => {
+const createOneProduct = async ( req, res, next ) => {
     try {
-        const { name = 'Brunette product', price = 0 } = req.body
+        const { name, price } = req.body
         const newProduct = { name, price }
 
         const productCreated = await ProductService.createOneProduct(newProduct)
-        res.status(201).json({
-            status: 'OK',
-            data: { 
-                products: productCreated
-            }
-        })
+        sendCreatedResponse({res, data: productCreated })
     } catch ( error ) {
-        res.status(error.status || 500).json({
-            status: 'ERROR',
-            error: { 
-                message: error.message || error
-            }
-        })
+        next(error)
     }
 }
 
-const updateOneProduct = async ( req, res ) => {}
+const updateOneProduct = async ( req, res, next ) => {}
 
-const deleteOneProduct = async ( req, res ) => {
+const deleteOneProduct = async ( req, res, next ) => {
     try {
         const { productId } = req.params
 
         const product = await ProductService.deleteOneProduct(productId)
-        res.status(200).json({
-            status: 'OK',
-            data: { 
-                products: product
-            }
-        })
+        sendSuccessResponse({ res, data: product })
 
     } catch ( error ) {
-        res.status(error.status || 500).json({
-            status: 'ERROR',
-            error: { 
-                message: error.message || error
-            }
-        })
+        next(error)
     }
 }
 

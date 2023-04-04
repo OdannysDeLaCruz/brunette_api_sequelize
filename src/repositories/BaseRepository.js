@@ -18,12 +18,12 @@ class BaseRepository {
         }
     }
 
-    async findOne(key) {
+    async findById(id) {
         try {
-            const item = await this.model.find({ key })
-            return item
+            const result = await this.model.findByPk(id)
+            return result
         } catch ( error ) {
-            throw new Error(error)
+            throw error
         }
     }
 
@@ -42,17 +42,9 @@ class BaseRepository {
 
     async delete(id) {
         try {
-            const result = await this.model.findByIdAndDelete(id)
-            return result
-        } catch ( error ) {
-            throw error
-        }
-    }
-
-    // Model Sequelize Methods
-    async findById(id) {
-        try {
-            const result = await this.model.findByPk(id)
+            const result = await this.model.destroy({
+                where: { id: id }
+            })
             return result
         } catch ( error ) {
             throw error

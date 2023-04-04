@@ -9,11 +9,12 @@ router.get('/:productId', ProductController.getOneProduct)
 router.post(
     '/', 
     [
-        check('name', 'name is require').not().isEmpty(),
-        check('price', 'price is require').not().isEmpty(),
+        check('name', 'name is require').isString().withMessage('Name must be a String').not().isEmpty(),
+        check('price', 'price is require').custom((value, { req }) => Number(req.body.price)).withMessage('Price must be a Number').not().isEmpty(),
         expressValidationResultMiddleware,
     ], 
     ProductController.createOneProduct
 )
+router.delete('/:productId', ProductController.deleteOneProduct)
 
 module.exports = router
