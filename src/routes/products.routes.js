@@ -6,6 +6,8 @@ const router = Router()
 
 router.get('/', ProductController.getAllProducts)
 router.get('/:productId', ProductController.getOneProduct)
+router.delete('/:productId', ProductController.deleteOneProduct)
+router.put('/:productId', ProductController.updateOneProduct)
 router.post(
     '/', 
     [
@@ -15,6 +17,5 @@ router.post(
     ], 
     ProductController.createOneProduct
 )
-router.delete('/:productId', ProductController.deleteOneProduct)
 
 module.exports = router

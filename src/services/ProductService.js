@@ -5,7 +5,10 @@ const productRepository = new ProductRepository()
 
 /**
  * @description Get all products of database
- * @returns {array} Objects array
+ * @param {object} object params
+ * @param {number} object.page page
+ * @param {number} object.limit limit
+ * @returns {Array <Product>} ProductList
  */
 const getAllProducts = async ({ page, limit = 10 }) => {
     try {
@@ -22,8 +25,8 @@ const getAllProducts = async ({ page, limit = 10 }) => {
 
 /**
  * @description Get one product by unique id
- * @param {string} id Collection ObjectId
- * @returns {array <product>} Array with one product object
+ * @param {number} id Collection ObjectId
+ * @returns {Product} Product
  */
 const getOneProduct = async (id) => {
     try {
@@ -65,11 +68,14 @@ const createOneProduct = async (newProduct) => {
     }
 }
 
+/**
+ * @description Delete a product
+ * @param {number} id Product Id
+ * @returns {Product} productDeleted
+ */
 const deleteOneProduct = async (id) => {
     try {
-        if ( !id ) {
-            throw Boom.badRequest('Param id is required')
-        }
+        if ( !id ) throw Boom.badRequest('Param id is required')
 
         const product = await productRepository.findById(id)
         if ( !product ) {
@@ -84,9 +90,35 @@ const deleteOneProduct = async (id) => {
     }
 } 
 
+/**
+ * @description Update a product
+ * @param {number} id Product Id
+ * @param {object} payload Data to update
+ * @returns {Product} productDeleted
+ */
+const updateOneProduct = async (id, payload) => {
+    try {
+        const attributes = Object.entries(payload).length
+        
+        if ( !id ) throw Boom.badRequest('Param id is required')
+        const product = await productRepository.findById(id)
+        if ( !product ) {
+            throw Boom.notFound('Product Not Found')
+        }
+
+        if ( !attributes ) throw Boom.badRequest('Payload is required')
+        const updated = product.update(payload)
+
+        return updated
+    } catch ( error ) {
+        throw error
+    }
+} 
+
 module.exports = {
     getAllProducts,
     getOneProduct,
     createOneProduct,
-    deleteOneProduct
+    deleteOneProduct,
+    updateOneProduct
 } 

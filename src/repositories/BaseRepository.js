@@ -36,8 +36,15 @@ class BaseRepository {
         }
     }
     
-    async update(id) {
-        throw new Error('Method not implemented.')
+    async update(id, payload) {
+        try {
+            const result = await this.model.update(payload, {
+                where: { id }
+            })
+            return result
+        } catch(error) {
+            throw error
+        }
     }
 
     async delete(id) {

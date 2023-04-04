@@ -46,7 +46,18 @@ const createOneProduct = async ( req, res, next ) => {
     }
 }
 
-const updateOneProduct = async ( req, res, next ) => {}
+const updateOneProduct = async ( req, res, next ) => {
+    try {
+        const { productId } = req.params
+        const updated = await ProductService.updateOneProduct(productId, req.body)
+        sendSuccessResponse({ res, data: {
+            updated: updated,
+            message: 'Product updated'
+        } })
+     } catch (error) {
+        next(error)
+    }
+}
 
 const deleteOneProduct = async ( req, res, next ) => {
     try {
