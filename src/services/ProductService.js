@@ -83,8 +83,10 @@ const deleteOneProduct = async (id) => {
         }
 
         // Product Model is paranoic 
-        const productDeleted = await productRepository.delete(product.id)
-        return productDeleted
+        await productRepository.delete(product.id)
+        return {
+            deleted: true
+        }
     } catch ( error ) {
         throw error
     }
@@ -107,6 +109,9 @@ const updateOneProduct = async (id, payload) => {
         }
 
         if ( !attributes ) throw Boom.badRequest('Payload is required')
+
+        // Validate all attributes types of payload
+        
         const updated = product.update(payload)
 
         return updated
