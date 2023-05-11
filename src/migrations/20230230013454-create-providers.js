@@ -14,7 +14,11 @@ module.exports = {
       },
       store_id: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Stores',
+          key: 'id',
+        },
       },
       createdAt: {
         allowNull: false,
