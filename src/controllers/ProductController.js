@@ -36,10 +36,9 @@ const getOneProduct = async ( req, res, next ) => {
 
 const createOneProduct = async ( req, res, next ) => {
     try {
-        const { name, price } = req.body
-        const newProduct = { name, price }
+        const product = req.body
 
-        const productCreated = await ProductService.createOneProduct(newProduct)
+        const productCreated = await ProductService.createOneProduct(product)
         sendCreatedResponse({res, data: productCreated })
     } catch ( error ) {
         next(error)

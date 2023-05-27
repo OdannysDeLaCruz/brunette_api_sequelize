@@ -15,6 +15,7 @@ const getAllProducts = async ({ page, limit = 10 }) => {
         const { count, rows } = await productRepository.all({ page, limit })
         return { count, rows }
     } catch ( error ) {
+        console.log(error)
         if ( error.status === 500) {
             throw Boom.badImplementation()
         } else {
@@ -59,9 +60,9 @@ const createOneProduct = async (newProduct) => {
             throw Boom.badRequest('No valid object provided')
         }
 
-        // TODO: verify all fields required
+        const { name, price, original_price, description, brand_id, store_id, category_id } = newProduct
 
-        const productCreated = await productRepository.create(newProduct)
+        const productCreated = await productRepository.create({ name, price, original_price, description, brand_id, store_id, category_id })
         return productCreated
     } catch ( error ) {
         throw error

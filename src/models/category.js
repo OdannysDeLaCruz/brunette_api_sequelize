@@ -5,14 +5,12 @@ module.exports = (sequelize, DataTypes) => {
   class Category extends Model {
     static associate(models) {
       this.belongsTo(models.Store, { foreignKey: 'store_id' })
-      this.belongsToMany(models.Product, { 
-        through: 'ProductCategories'
-      })
+      this.hasMany(models.Product, { foreignKey: 'category_id' })
     }
   }
   Category.init({
     name: DataTypes.STRING,
-    parentId: {
+    parent_id: {
       type: DataTypes.INTEGER
     },
   }, {

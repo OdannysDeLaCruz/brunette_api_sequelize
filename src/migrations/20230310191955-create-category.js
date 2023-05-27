@@ -16,6 +16,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       store_id: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'Stores',

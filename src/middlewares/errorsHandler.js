@@ -5,6 +5,7 @@ const errorLogger = (error, res, req, next) => {
 }
 
 const errorResponder = (error, req, res, next) => {
+    console.log(error)
     if ( error.isBoom ) {
         const { output } = error
         res.status(output.statusCode).json(output.payload)

@@ -21,13 +21,20 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
+      category_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Categories',
+          key: 'id',
+        }
+      },
       brand_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'Brands',
           key: 'id',
-          name: 'brandId'
         }
       },
       store_id: {

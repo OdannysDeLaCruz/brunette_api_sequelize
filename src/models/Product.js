@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.Store, { foreignKey: 'store_id' }) 
       this.belongsTo(models.Brand, { foreignKey: 'brand_id' }) 
-      this.belongsToMany(models.Category, { through: 'ProductCategories' })
+      this.belongsTo(models.Category, { foreignKey: 'category_id' })
     }
   }
   Product.init({

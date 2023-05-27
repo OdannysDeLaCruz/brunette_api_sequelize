@@ -10,6 +10,7 @@ module.exports = {
         price: faker.commerce.price(1000, 10000),
         original_price: faker.commerce.price(1000, 10000),
         description: faker.commerce.productDescription(),
+        category_id: Math.floor(Math.random() * (10 - 1)) + 1,
         brand_id: Math.floor(Math.random() * (10 - 1)) + 1,
         store_id: Math.floor(Math.random() * (3 - 1)) + 1,
         createdAt: new Date(),

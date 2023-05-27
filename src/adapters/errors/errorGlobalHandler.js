@@ -1,0 +1,7 @@
+const verifyTypeError = () => {
+    
+}
+
+module.exports = {
+
+}
