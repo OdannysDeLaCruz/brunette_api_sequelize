@@ -2,27 +2,33 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('UserRoles', {
+    await queryInterface.createTable('Transactions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      role_id: {
+      transaction_status: {
+        type: Sequelize.STRING
+      },
+      transaction_response: {
+        type: Sequelize.STRING
+      },
+      order_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Roles',
-          key: 'id',
+          model: 'Orders',
+          key: 'id'
         }
       },
-      user_id: {
+      user_payment_method_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Users',
-          key: 'id',
+          model: 'UserPaymentMethods',
+          key: 'id'
         }
       },
       createdAt: {
@@ -36,6 +42,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('UserRoles');
+    await queryInterface.dropTable('Transactions');
   }
 };

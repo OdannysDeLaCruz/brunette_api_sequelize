@@ -7,9 +7,7 @@ role_permissions
 carts
 cart_items
 payments_methods
-store_payments_methods
-users_payments_methods
-users_payments_methods_details
+users_payments_methods => users_payments_methods_details
 cities
 states
 shipping_addresses

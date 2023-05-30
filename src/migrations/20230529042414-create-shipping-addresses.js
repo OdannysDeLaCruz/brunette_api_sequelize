@@ -2,26 +2,35 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('UserRoles', {
+    await queryInterface.createTable('ShippingAddresses', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      role_id: {
+      address: {
+        type: Sequelize.STRING
+      },
+      phone: {
+        type: Sequelize.STRING
+      },
+      postal_code: {
+        type: Sequelize.STRING
+      },
+      city_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Roles',
+          model: 'Cities',
           key: 'id',
         }
       },
-      user_id: {
+      state_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Users',
+          model: 'States',
           key: 'id',
         }
       },
@@ -36,6 +45,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('UserRoles');
+    await queryInterface.dropTable('ShippingAddresses');
   }
 };

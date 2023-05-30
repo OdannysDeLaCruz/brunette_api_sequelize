@@ -7,6 +7,9 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Brand, { foreignKey: 'store_id' })
       this.hasMany(models.Product, { foreignKey: 'store_id' }) 
       this.hasMany(models.Category, { foreignKey: 'store_id' })
+      this.hasMany(models.PaymentMethod, { foreignKey: 'store_id' })
+      this.hasMany(models.User, { foreignKey: 'store_id' })
+      this.hasMany(models.Order, { foreignKey: 'store_id' })
     }
   }
   Store.init({

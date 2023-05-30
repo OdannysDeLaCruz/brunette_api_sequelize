@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Store, { foreignKey: 'store_id' }) 
       this.belongsTo(models.Brand, { foreignKey: 'brand_id' }) 
       this.belongsTo(models.Category, { foreignKey: 'category_id' })
+      this.hasMany(models.DetailOrder)
     }
   }
   Product.init({
