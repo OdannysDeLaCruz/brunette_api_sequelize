@@ -1,11 +1,14 @@
 const { Router } = require('express')
 const { check } = require('express-validator')
 const { expressValidationResultMiddleware } = require('../middlewares/expressValidationResultMiddleware')
+const { tokenVerify } = require('../middlewares/authMiddleware')
 const ProductValidator = require('./validators/ProductValidator')
 const ProductController = require('../controllers/ProductController')
 const router = Router()
 
 const isNumber = (number) => typeof number === 'number'
+
+router.use(tokenVerify)
 
 router.get('/', ProductController.getAllProducts)
 router.get('/:productId', ProductController.getOneProduct)
