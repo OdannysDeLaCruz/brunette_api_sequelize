@@ -59,18 +59,18 @@ const getAllCategoryProducts = async (categoryId) => {
         }
 
         const category = await getOneCategory(categoryId)
-
-        const categoryProducts = await categoryRepository.getAllProducts(categoryId)
-        if (categoryProducts === null) {
-            throw Boom.notFound('Products not found')
+        if ( category ) {
+            const products = await categoryRepository.getAllProducts(categoryId)
+            
+            return {
+                category,
+                products
+            }
+        } else {
+            throw Boom.notFound('Category not found')
         }
 
-        const response = {
-            // category,
-            products: categoryProducts
-        }
 
-        return response
     } catch ( error ) {
         throw error
     }
