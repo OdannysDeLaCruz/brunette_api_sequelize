@@ -1,4 +1,4 @@
-const { Category, Product, ProductCategories } = require("../models/index.js")
+const { Category, Product } = require("../models/index.js")
 const BaseRepository = require("./BaseRepository.js")
 
 class CategoryRepository extends BaseRepository {
@@ -19,23 +19,8 @@ class CategoryRepository extends BaseRepository {
     
     async getAllProducts(id) {
         try {
-            // const result = await this.model.findOne({
-            //     where: { id },
-            //     include: [Product],
-            // })
-
-            const result = await this.model.findOne({
-                where: { id },
-                include: {
-                  model: Product,
-                  through: {
-                    attributes: []
-                  }
-                }
-              });
-
-            console.log(result)
-            return result
+            const products = await Product.findAll({ where: { category_id: id } })
+            return products
         } catch ( error ) {
             throw error
         }
