@@ -18,6 +18,9 @@ module.exports = {
       original_price: {
         type: Sequelize.INTEGER
       },
+      stock: {
+        type: Sequelize.INTEGER
+      },
       description: {
         type: Sequelize.TEXT
       },
