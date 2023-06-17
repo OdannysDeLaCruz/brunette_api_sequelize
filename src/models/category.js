@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Category.init({
     name: DataTypes.STRING,
+    slug: DataTypes.STRING,
     parent_id: {
       type: DataTypes.INTEGER
     },
