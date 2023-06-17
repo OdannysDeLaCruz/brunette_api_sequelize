@@ -12,6 +12,9 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      slug: {
+        type: Sequelize.STRING
+      },
       parent_id: {
         type: Sequelize.INTEGER
       },
@@ -32,6 +35,10 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+
+    // await queryInterface.addColumn('Categories', 'slug', {
+    //   type: Sequelize.STRING
+    // })
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Categories');
